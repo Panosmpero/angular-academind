@@ -10,3 +10,19 @@ selector: ".app-servers"
 <div class="app-servers"></div>
 
 NOTE: Select by id or CSS pseudo selectors won't work! 
+=================================================================
+
+Databinding
+
+OUTPUT
+-------
+String Interpolation ({{ data }})             // Only ternary expressions, no block
+Property Binding ( [property]="data" )
+
+INPUT
+-------
+Event Binding ( (event)="expression" )
+
+BOTH
+-------
+Two-way Binding ( [(ngModel)]="data" )
