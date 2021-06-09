@@ -1,0 +1,12 @@
+Selector element or attribute or class
+-------------------------------
+selector: "app-servers"
+<app-servers></app-servers>
+
+selector: "[app-servers]"
+<div app-servers></div>
+
+selector: ".app-servers"
+<div class="app-servers"></div>
+
+NOTE: Select by id or CSS pseudo selectors won't work! 
