@@ -145,3 +145,21 @@ encapsulation: ViewEncapsulation.Emulated | None | ShadowDom
 ```
 
 > NOTE: We can use only in HTML file, not in TS file
+
+---
+
+We can select the local ref with:
+
+```
+@ViewChild(<ref name>: string | <component>) <name>: ElementRef
+```
+
+### Example:
+
+```
+@ViewChild("serverContentInput", { static: true }) serverContentInput: ElementRef;
+
+method() {
+  newInput: this.serverContentInput.nativeElement.value
+}
+```
