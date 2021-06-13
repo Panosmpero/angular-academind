@@ -163,3 +163,11 @@ method() {
   newInput: this.serverContentInput.nativeElement.value
 }
 ```
+
+---
+
+Everything placed between opening and closing tags of your components will be lost. There is a special directives component
+
+```
+<ng-content></ng-content>
+```
