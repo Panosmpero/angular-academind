@@ -172,6 +172,14 @@ Everything placed between opening and closing tags of your components will be lo
 <ng-content></ng-content>
 ```
 
+Same goes with `@ContentChild` but it gets populated at `ngAfterContentInit`
+
+```
+<div #<ref name>></div>
+
+@ContentChild(<ref name>: string | <component>) <name>: ElementRef
+```
+
 ---
 
 # Lifecycle
