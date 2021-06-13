@@ -171,3 +171,18 @@ Everything placed between opening and closing tags of your components will be lo
 ```
 <ng-content></ng-content>
 ```
+
+---
+
+# Lifecycle
+
+- `ngOnChanges` Called after a bound input property has changed and once at start (called before `ngOnInit`)
+- `ngOnInit` Called once when component initialized (ComponentDidMount) and run after the constructor
+- `ngDoCheck` Called during every change detection run (+1 at the end when in development mode)
+- `ngAfterContentInit` Called after content (ng-content) has been projected into view
+- `ngAfterContentChecked` Called every time the projected content has been checked
+- `ngAfterViewInit` Called after the compoenent's view (and child views) has been initialized
+- `ngAfterViewChecked` Called every time the view (and child views) has been checked
+- `ngOnDestroy` Called once the component is about to be destroyed (eg. ngIf)
+
+> NOTE: Implementing those methods at the top of class component is a good practice, although you can just call them inside of it
