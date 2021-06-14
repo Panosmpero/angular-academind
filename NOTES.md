@@ -62,21 +62,15 @@ Two-way Binding
 
 # CLI
 
-```
-ng generate component <componentName>
-```
+`ng generate component <componentName>` |
+`ng g c <componentName>`
 
-```
-ng g c <componentName>
-```
+`ng g c <componentName> --skip-tests`
 
-```
-ng g c <componentName> --skip-tests
-```
+`ng g c <folder>/<componentName>`
 
-```
-ng g c <folder>/<componentName>
-```
+`ng generate directive <directiveName>` |
+`ng g d <directiveName>`
 
 ---
 
@@ -150,6 +144,8 @@ encapsulation: ViewEncapsulation.Emulated | None | ShadowDom
 
 We can select the local ref with:
 
+`@ViewChild`
+
 ```
 @ViewChild(<ref name>: string | <component>) <name>: ElementRef
 ```
@@ -194,3 +190,60 @@ Same goes with `@ContentChild` but it gets populated at `ngAfterContentInit`
 - `ngOnDestroy` Called once the component is about to be destroyed (eg. ngIf)
 
 > NOTE: Implementing those methods at the top of class component is a good practice, although you can just call them inside of it
+
+---
+
+# Directives
+
+> filename.directive.ts
+
+```
+import { Directive } from '@angular/core';
+
+@Directive({
+  selector: ...
+})
+export class DirectiveName {
+  ...
+}
+```
+
+and then we import to our main app
+
+> app.module.ts
+
+```
+@NgModule({
+  declarations: [AppComponent, ..., DirectiveName],
+  ...
+})
+```
+
+**OR**
+
+`ng g d <directiveName>`
+
+---
+
+`HostListener()`
+
+Listen to host events
+
+`HostBinding()`
+
+Bind to host props
+
+## Structural Directive
+
+```
+export class <className> {
+  @Input() set <name>() {    /* name must be the same as the selector  */
+    ...toDo
+  }
+
+  constructor(private templateRef: TemplateRef<any>, private vcRef: ViewContainerRef) { }
+
+}
+```
+
+`constructor(what to do, where to do)`
