@@ -62,21 +62,15 @@ Two-way Binding
 
 # CLI
 
-```
-ng generate component <componentName>
-```
+`ng generate component <componentName>` |
+`ng g c <componentName>`
 
-```
-ng g c <componentName>
-```
+`ng g c <componentName> --skip-tests`
 
-```
-ng g c <componentName> --skip-tests
-```
+`ng g c <folder>/<componentName>`
 
-```
-ng g c <folder>/<componentName>
-```
+`ng generate directive <directiveName>` |
+`ng g d <directiveName>`
 
 ---
 
@@ -224,3 +218,7 @@ and then we import to our main app
   ...
 })
 ```
+
+**OR**
+
+`ng g d <directiveName>`
