@@ -222,3 +222,13 @@ and then we import to our main app
 **OR**
 
 `ng g d <directiveName>`
+
+---
+
+`HostListener()`
+
+Listen to host events
+
+`HostBinding()`
+
+Bind to host props
