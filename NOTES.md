@@ -232,3 +232,18 @@ Listen to host events
 `HostBinding()`
 
 Bind to host props
+
+## Structural Directive
+
+```
+export class <className> {
+  @Input() set <name>() {    /* name must be the same as the selector  */
+    ...toDo
+  }
+
+  constructor(private templateRef: TemplateRef<any>, private vcRef: ViewContainerRef) { }
+
+}
+```
+
+`constructor(what to do, where to do)`
