@@ -247,3 +247,42 @@ export class <className> {
 ```
 
 `constructor(what to do, where to do)`
+
+---
+
+# Services
+
+create a file
+
+> serviceName.service.ts
+
+eg. logging service
+
+```
+export class LoggingService {
+  logStatusChange(status: string) {
+    console.log(`A server status changed, new status: ${status}`);
+  }
+}
+```
+
+Now inside the component we call it in the provider, then the constructor
+and finally we use it.
+
+```
+@Component({
+  ...,
+  providers: [LoggingService],
+})
+
+export class AccountComponent {
+  ...
+
+  constructor(private loggingService: LoggingService) {}
+
+  onSetTo(status: string) {
+    ...
+    this.loggingService.logStatusChange(status);
+  }
+}
+```
