@@ -286,3 +286,5 @@ export class AccountComponent {
   }
 }
 ```
+
+> CAREFUL: If the service is in many selectors you may need to chose only 1 otherwise you will create many instances of the same service that will lead into bugs.
