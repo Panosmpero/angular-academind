@@ -295,8 +295,19 @@ export class AccountComponent {
 
 Highest level is the app.module to place the service in the providers where we can use the service in the entire App and even inject other services.
 
-Add before class declaration:
+Add before class declaration in service you want to inject:
 
 ```
 @Injectable()
+```
+
+**OR**
+
+You can do this instead:
+
+```
+@Injectable({ providedIn: "root" })
+export class MyService {
+  ....
+}
 ```
