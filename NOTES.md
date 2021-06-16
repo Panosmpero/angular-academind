@@ -311,3 +311,30 @@ export class MyService {
   ....
 }
 ```
+
+---
+
+# Routing
+
+> app.module.ts
+
+```
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: '', component: HomeComponent },
+  ...
+];
+
+@NgModule({
+  ...
+  imports: [..., RouterModule.forRoot(appRoutes)],
+  ...
+})
+```
+
+> app.component.html
+
+```
+<router-outlet></router-outlet>
+```
