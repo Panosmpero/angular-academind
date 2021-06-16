@@ -247,3 +247,67 @@ export class <className> {
 ```
 
 `constructor(what to do, where to do)`
+
+---
+
+# Services
+
+create a file
+
+> serviceName.service.ts
+
+eg. logging service
+
+```
+export class LoggingService {
+  logStatusChange(status: string) {
+    console.log(`A server status changed, new status: ${status}`);
+  }
+}
+```
+
+Now inside the component we call it in the provider, then the constructor
+and finally we use it.
+
+```
+@Component({
+  ...,
+  providers: [LoggingService],
+})
+
+export class AccountComponent {
+  ...
+
+  constructor(private loggingService: LoggingService) {}
+
+  onSetTo(status: string) {
+    ...
+    this.loggingService.logStatusChange(status);
+  }
+}
+```
+
+> CAREFUL: If the service is in many selectors you may need to chose only 1 otherwise you will create many instances of the same service that will lead into bugs.
+
+---
+
+## Injecting Services
+
+Highest level is the app.module to place the service in the providers where we can use the service in the entire App and even inject other services.
+
+Add before class declaration in service you want to inject:
+
+```
+@Injectable()
+```
+
+**OR**
+
+You can do this instead:
+
+```
+@Injectable({ providedIn: "root" })
+export class MyService {
+  ....
+}
+```
