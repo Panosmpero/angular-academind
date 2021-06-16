@@ -1,6 +1,7 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 
+@Injectable({ providedIn: 'root' })
 export class ShoppingListService {
   private ingredients: Ingredient[] = [
     new Ingredient('Apples', 5),
@@ -14,6 +15,15 @@ export class ShoppingListService {
 
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
+    this.newIngredients.emit(this.ingredients.slice());
+  }
+
+  addIngredients(ingredients: Ingredient[]) {
+    // Too many emits with this method
+    // ingredients.forEach(ingredient => {
+    //   this.addIngredient(ingredient)
+    // });
+    this.ingredients.push(...ingredients);
     this.newIngredients.emit(this.ingredients.slice());
   }
 }
