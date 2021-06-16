@@ -338,3 +338,25 @@ const appRoutes: Routes = [
 ```
 <router-outlet></router-outlet>
 ```
+
+> navbar.component.ts
+
+```
+<ul>
+  <li><a routerLink="/">Home</a></li>
+  <li><a routerLink="/servers">Servers</a></li>
+  <li><a [routerLink]="['/users']">Users</a></li>
+</ul>
+```
+
+Appends the path to the end of our current path
+
+- `routerLink="relative path"` | `routerLink="./relative path"`
+
+Redirects us to this absolute path
+
+- `routerLink="/absolute path"`
+
+Moves 2 paths up and then adds the relative path
+
+- `routerLink="../../relative path"`
