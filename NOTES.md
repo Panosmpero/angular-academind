@@ -360,3 +360,45 @@ Redirects us to this absolute path
 Moves 2 paths up and then adds the relative path
 
 - `routerLink="../../relative path"`
+
+Directive when a link is active
+
+- `routerLinkActive="className"`
+
+Exact path for the same directive
+
+- `routerLinkActive="className" [routerLinkActiveOptions]="{ exact: true }"`
+
+---
+
+Access router inside JavaScript
+
+```
+import { Router } from '@angular/router';
+
+export class Component implements OnInit {
+  constructor(private router: Router) {}
+
+  ngOnInit() {}
+
+  onToDo() {
+    this.router.navigate(['/absolutePath']);
+  }
+}
+```
+
+Relative route
+
+```
+import { ActivatedRoute, Router } from '@angular/router';
+
+export class Component implements OnInit {
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit() {}
+
+  onToDo() {
+    this.router.navigate(['/absolutePath'], { relativeTo: this.route });
+  }
+}
+```
