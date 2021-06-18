@@ -402,3 +402,30 @@ export class Component implements OnInit {
   }
 }
 ```
+
+## Route parameters
+
+```
+{ path: 'users/:param1/:param2', component: ComponentName }
+```
+
+we access params here:
+
+```
+this.route.snapshot.params['param1']
+```
+
+we get updated params here:
+
+```
+this.route.params.subscribe((params: Params) => {
+  this.user.param1 = params['param1'];
+  ...
+});
+```
+
+we set params here:
+
+```
+<a [routerLink]="['/routeName', param1, param2]">Link Name</a>
+```
