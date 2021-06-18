@@ -429,3 +429,24 @@ we set params here:
 ```
 <a [routerLink]="['/routeName', param1, param2]">Link Name</a>
 ```
+
+## Query params
+
+```
+<a
+  [routerLink]="['/routeName', param1, param2]"
+  [queryParams]="{ firstQuery: 1, otherQuery: 23 }"
+  fragment="fragmentName"
+>Link Name</a>
+```
+
+will result in `/routeName/param1/param2?firstQuery=1&otherQuery=23#fragmentName`
+
+OR the same through TS code
+
+```
+this.router.navigate(['/servers', param1, param2], {
+  queryParams: { firstQuery: "1", otherQuery: "23" },
+  fragment: "fragmentName"
+})
+```
