@@ -468,3 +468,14 @@ and we add to ComponentName
 ```
 
 will result in `/pathName/childPathName`
+
+---
+
+Preserve query params on navigate
+
+```
+this.router.navigate(['relativePath'], {
+  relativeTo: this.route,
+  queryParamsHandling: 'preserve'
+});
+```

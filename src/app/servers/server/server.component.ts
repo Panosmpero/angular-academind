@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { ServersService } from '../servers.service';
 
@@ -13,7 +13,8 @@ export class ServerComponent implements OnInit {
 
   constructor(
     private serversService: ServersService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -23,5 +24,15 @@ export class ServerComponent implements OnInit {
       (params: Params) =>
         (this.server = this.serversService.getServer(Number(params['id'])))
     );
+  }
+
+  onEdit() {
+    // This code is redundant since we can do this with relative route
+    // const id = this.route.snapshot.params['id'];
+    // this.router.navigate(['/servers', id, 'edit']);
+    this.router.navigate(['edit'], {
+      relativeTo: this.route,
+      queryParamsHandling: 'preserve',
+    });
   }
 }
