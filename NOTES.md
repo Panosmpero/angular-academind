@@ -479,3 +479,75 @@ this.router.navigate(['relativePath'], {
   queryParamsHandling: 'preserve'
 });
 ```
+
+## Protected routes
+
+```
+export class AuthGuardService implements CanActivate {
+  constructor(private authService: AuthService) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (authenticated) do stuff
+    else redirect
+  }
+```
+
+then we add to the routes we want to be protected
+
+```
+  {
+    path: 'pathName',
+    canActivate: [AuthGuardService],
+    component: ComponentName,
+    children: [
+      ...
+    ],
+  },
+```
+
+and finally we need to add to **app.module.ts**
+
+```
+@NgModule({
+  providers: [AuthGuardService, ...],
+  ...
+})
+```
+
+## Protected child routes
+
+```
+export class AuthGuardService implements CanActivate {
+  constructor(private authService: AuthService) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (authenticated) do stuff
+    else redirect
+  }
+
+  canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.canActivate(route, state);
+  }
+```
+
+then we add instead
+
+```
+  {
+    path: 'pathName',
+    canActivateChild: [AuthGuardService],
+    component: ComponentName,
+    children: [
+      ...
+    ],
+  },
+```
