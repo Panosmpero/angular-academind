@@ -450,3 +450,21 @@ this.router.navigate(['/servers', param1, param2], {
   fragment: "fragmentName"
 })
 ```
+
+## Child routing
+
+```
+const appRoutes: Routes = [
+  { path: 'pathName', component: ComponentName, children: [
+    { path: 'childPathName', component: childComponentName }
+  ] },
+];
+```
+
+and we add to ComponentName
+
+```
+<router-outlet></router-outlet>
+```
+
+will result in `/pathName/childPathName`
