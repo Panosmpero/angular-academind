@@ -551,3 +551,64 @@ then we add instead
     ],
   },
 ```
+
+## Can Deactivate
+
+> TODO `FML`
+
+## Passing down data
+
+Static data:
+
+```
+{
+  path: 'pathName',
+  component: componentName,
+  data: { message: 'test message' },
+},
+```
+
+Dynamic data:
+
+Create a **Resolver** which loads before displaying the data
+The opposite from loading the component first then getting data
+
+```
+export class ResolverName implements Resolve<interface> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<Server> | Promise<Server> | Server {
+    return this....
+  }
+}
+```
+
+> app.module.ts
+
+```
+...
+providers: [..., ResolverName]
+```
+
+> app-routing.module.ts
+
+```
+{
+  path: 'pathName',
+  component: ComponentName,
+  resolve: { customResolverName: ResolverName },
+},
+```
+
+and we can user it in a component eg:
+
+```
+ngOnInit() {
+  this.route.data.subscribe(
+    (data: Data) => {
+      this.customData = data['customResolverName']
+    }
+  )
+}
+```
