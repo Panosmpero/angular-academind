@@ -311,3 +311,304 @@ export class MyService {
   ....
 }
 ```
+
+---
+
+# Routing
+
+> app.module.ts
+
+```
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: '', component: HomeComponent },
+  ...
+];
+
+@NgModule({
+  ...
+  imports: [..., RouterModule.forRoot(appRoutes)],
+  ...
+})
+```
+
+> app.component.html
+
+```
+<router-outlet></router-outlet>
+```
+
+> navbar.component.ts
+
+```
+<ul>
+  <li><a routerLink="/">Home</a></li>
+  <li><a routerLink="/servers">Servers</a></li>
+  <li><a [routerLink]="['/users']">Users</a></li>
+</ul>
+```
+
+Appends the path to the end of our current path
+
+- `routerLink="relative path"` | `routerLink="./relative path"`
+
+Redirects us to this absolute path
+
+- `routerLink="/absolute path"`
+
+Moves 2 paths up and then adds the relative path
+
+- `routerLink="../../relative path"`
+
+Directive when a link is active
+
+- `routerLinkActive="className"`
+
+Exact path for the same directive
+
+- `routerLinkActive="className" [routerLinkActiveOptions]="{ exact: true }"`
+
+---
+
+Access router inside JavaScript
+
+```
+import { Router } from '@angular/router';
+
+export class Component implements OnInit {
+  constructor(private router: Router) {}
+
+  ngOnInit() {}
+
+  onToDo() {
+    this.router.navigate(['/absolutePath']);
+  }
+}
+```
+
+Relative route
+
+```
+import { ActivatedRoute, Router } from '@angular/router';
+
+export class Component implements OnInit {
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit() {}
+
+  onToDo() {
+    this.router.navigate(['/absolutePath'], { relativeTo: this.route });
+  }
+}
+```
+
+## Route parameters
+
+```
+{ path: 'users/:param1/:param2', component: ComponentName }
+```
+
+we access params here:
+
+```
+this.route.snapshot.params['param1']
+```
+
+we get updated params here:
+
+```
+this.route.params.subscribe((params: Params) => {
+  this.user.param1 = params['param1'];
+  ...
+});
+```
+
+we set params here:
+
+```
+<a [routerLink]="['/routeName', param1, param2]">Link Name</a>
+```
+
+## Query params
+
+```
+<a
+  [routerLink]="['/routeName', param1, param2]"
+  [queryParams]="{ firstQuery: 1, otherQuery: 23 }"
+  fragment="fragmentName"
+>Link Name</a>
+```
+
+will result in `/routeName/param1/param2?firstQuery=1&otherQuery=23#fragmentName`
+
+OR the same through TS code
+
+```
+this.router.navigate(['/servers', param1, param2], {
+  queryParams: { firstQuery: "1", otherQuery: "23" },
+  fragment: "fragmentName"
+})
+```
+
+## Child routing
+
+```
+const appRoutes: Routes = [
+  { path: 'pathName', component: ComponentName, children: [
+    { path: 'childPathName', component: childComponentName }
+  ] },
+];
+```
+
+and we add to ComponentName
+
+```
+<router-outlet></router-outlet>
+```
+
+will result in `/pathName/childPathName`
+
+---
+
+Preserve query params on navigate
+
+```
+this.router.navigate(['relativePath'], {
+  relativeTo: this.route,
+  queryParamsHandling: 'preserve'
+});
+```
+
+## Protected routes
+
+```
+export class AuthGuardService implements CanActivate {
+  constructor(private authService: AuthService) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (authenticated) do stuff
+    else redirect
+  }
+```
+
+then we add to the routes we want to be protected
+
+```
+  {
+    path: 'pathName',
+    canActivate: [AuthGuardService],
+    component: ComponentName,
+    children: [
+      ...
+    ],
+  },
+```
+
+and finally we need to add to **app.module.ts**
+
+```
+@NgModule({
+  providers: [AuthGuardService, ...],
+  ...
+})
+```
+
+## Protected child routes
+
+```
+export class AuthGuardService implements CanActivate {
+  constructor(private authService: AuthService) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (authenticated) do stuff
+    else redirect
+  }
+
+  canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.canActivate(route, state);
+  }
+```
+
+then we add instead
+
+```
+  {
+    path: 'pathName',
+    canActivateChild: [AuthGuardService],
+    component: ComponentName,
+    children: [
+      ...
+    ],
+  },
+```
+
+## Can Deactivate
+
+> TODO `FML`
+
+## Passing down data
+
+Static data:
+
+```
+{
+  path: 'pathName',
+  component: componentName,
+  data: { message: 'test message' },
+},
+```
+
+Dynamic data:
+
+Create a **Resolver** which loads before displaying the data
+The opposite from loading the component first then getting data
+
+```
+export class ResolverName implements Resolve<interface> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<Server> | Promise<Server> | Server {
+    return this....
+  }
+}
+```
+
+> app.module.ts
+
+```
+...
+providers: [..., ResolverName]
+```
+
+> app-routing.module.ts
+
+```
+{
+  path: 'pathName',
+  component: ComponentName,
+  resolve: { customResolverName: ResolverName },
+},
+```
+
+and we can user it in a component eg:
+
+```
+ngOnInit() {
+  this.route.data.subscribe(
+    (data: Data) => {
+      this.customData = data['customResolverName']
+    }
+  )
+}
+```
