@@ -612,3 +612,7 @@ ngOnInit() {
   )
 }
 ```
+
+# Observables
+
+aa
