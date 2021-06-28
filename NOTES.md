@@ -614,5 +614,3 @@ ngOnInit() {
 ```
 
 # Observables
-
-aa
