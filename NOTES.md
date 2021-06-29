@@ -654,3 +654,5 @@ ngOnInit() {
     )
 }
 ```
+
+> NOTE: Use `Subject` instead of EventEmmiters only for cross-component events, not for @Output
