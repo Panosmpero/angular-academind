@@ -612,3 +612,47 @@ ngOnInit() {
   )
 }
 ```
+
+# Observables
+
+### Custom observable
+
+```
+import { Observable } from 'rxjs';
+
+const customObservable = new Observable(observer => {
+  observer.next() | observer.error() | observer.complete()
+})
+
+ngOnInit() {
+  this.observableTrackerName = customObservable.subscribe(
+    next => { ... },
+    error => { ... },
+    () => { ... }           // Complete cleanup function
+  )
+}
+
+ngOnDestroy() {
+  this.observableTrackerName.unsubscribe()
+}
+```
+
+### Operators
+
+With `pipe()` we can use 1 or more operators to transform the data
+
+```
+import { map } from 'rxjs/operators';
+
+ngOnInit() {
+  this.observableTrackerName = customObservable
+    .pipe(map( () => { ... } ))
+    .subscribe(
+      next => { ... },
+      error => { ... },
+      () => { ... }           // Complete cleanup function
+    )
+}
+```
+
+> NOTE: Use `Subject` instead of EventEmmiters only for cross-component events, not for @Output
