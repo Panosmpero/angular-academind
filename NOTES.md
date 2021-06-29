@@ -636,3 +636,21 @@ ngOnDestroy() {
   this.observableTrackerName.unsubscribe()
 }
 ```
+
+### Operators
+
+With `pipe()` we can use 1 or more operators to transform the data
+
+```
+import { map } from 'rxjs/operators';
+
+ngOnInit() {
+  this.observableTrackerName = customObservable
+    .pipe(map( () => { ... } ))
+    .subscribe(
+      next => { ... },
+      error => { ... },
+      () => { ... }           // Complete cleanup function
+    )
+}
+```
