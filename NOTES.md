@@ -656,3 +656,8 @@ ngOnInit() {
 ```
 
 > NOTE: Use `Subject` instead of EventEmmiters only for cross-component events, not for @Output
+
+# Forms
+
+1. Template-Driven (write HTML and Angular handles the rest)
+2. Reactive (write TS and HTML and synch both)
